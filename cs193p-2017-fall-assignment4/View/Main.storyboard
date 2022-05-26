@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Set Game View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="SetGameViewController" customModule="cs193p_2017_fall_assignment4" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8py-y8-7iJ" customClass="SetCardAreaView" customModule="cs193p_2017_fall_assignment4" customModuleProvider="target">
+                                <rect key="frame" x="5" y="49" width="365" height="652.33333333333337"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DEe-8b-2kr" customClass="DeckView" customModule="cs193p_2017_fall_assignment4" customModuleProvider="target">
+                                <rect key="frame" x="126.66666666666666" y="696.33333333333337" width="121.66666666666666" height="86.666666666666629"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="VgO-Tj-hoI" userLabel="VerticalStackView">
+                                <rect key="frame" x="5.0000000000000071" y="696.33333333333337" width="121.66666666666669" height="86.666666666666629"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="caS-P1-9ow">
+                                        <rect key="frame" x="0.0" y="0.0" width="121.66666666666667" height="30"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Play Again"/>
+                                        <connections>
+                                            <action selector="playAgain:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FC2-dl-8R5"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sets on view: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3d-AB-y3s">
+                                        <rect key="frame" x="0.0" y="38" width="121.66666666666667" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWO-kA-jnV">
+                                        <rect key="frame" x="0.0" y="66.333333333333258" width="121.66666666666667" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ZWO-kA-jnV" firstAttribute="centerX" secondItem="VgO-Tj-hoI" secondAttribute="centerX" id="wbi-pX-5Zm"/>
+                                </constraints>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8AP-CF-Fd6" userLabel="DropView" customClass="DeckView" customModule="cs193p_2017_fall_assignment4" customModuleProvider="target">
+                                <rect key="frame" x="248.33333333333334" y="696.33333333333337" width="121.66666666666666" height="86.666666666666629"/>
+                                <color key="backgroundColor" systemColor="systemCyanColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8AP-CF-Fd6" secondAttribute="trailing" constant="5" id="9AY-Op-YOU"/>
+                            <constraint firstItem="8AP-CF-Fd6" firstAttribute="height" secondItem="VgO-Tj-hoI" secondAttribute="height" id="CQa-rM-Hp6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="8AP-CF-Fd6" secondAttribute="bottom" constant="-5" id="DUV-7l-Eio"/>
+                            <constraint firstItem="VgO-Tj-hoI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="5" id="J8s-kD-iKl"/>
+                            <constraint firstItem="VgO-Tj-hoI" firstAttribute="width" secondItem="8AP-CF-Fd6" secondAttribute="width" id="KIK-vB-Xf0"/>
+                            <constraint firstItem="8py-y8-7iJ" firstAttribute="bottom" secondItem="VgO-Tj-hoI" secondAttribute="top" constant="5" id="US4-dP-MuO"/>
+                            <constraint firstItem="8py-y8-7iJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="VHa-k2-ORB"/>
+                            <constraint firstItem="DEe-8b-2kr" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="gPJ-te-0GT"/>
+                            <constraint firstItem="VgO-Tj-hoI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="hHl-QO-UVH"/>
+                            <constraint firstItem="8py-y8-7iJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="jCe-Fl-RSd"/>
+                            <constraint firstItem="DEe-8b-2kr" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="5" id="kui-OS-RW1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8py-y8-7iJ" secondAttribute="trailing" constant="5" id="lMa-pf-BcU"/>
+                            <constraint firstItem="8AP-CF-Fd6" firstAttribute="width" secondItem="DEe-8b-2kr" secondAttribute="width" id="oYF-TS-nhR"/>
+                            <constraint firstItem="DEe-8b-2kr" firstAttribute="height" secondItem="8AP-CF-Fd6" secondAttribute="height" id="vWq-bf-7rd"/>
+                            <constraint firstItem="VgO-Tj-hoI" firstAttribute="trailing" secondItem="DEe-8b-2kr" secondAttribute="leading" id="xc0-vQ-05q"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="8bC-Xf-vdC" id="QRA-ZE-fqw"/>
+                        <outlet property="deckView" destination="DEe-8b-2kr" id="zyP-Qg-SuG"/>
+                        <outlet property="dropView" destination="8AP-CF-Fd6" id="rEl-xS-aOn"/>
+                        <outlet property="scoreLabel" destination="ZWO-kA-jnV" id="h70-fh-Nhg"/>
+                        <outlet property="setCardsView" destination="8py-y8-7iJ" id="l1W-Oi-ZDk"/>
+                        <outlet property="setCountLabel" destination="q3d-AB-y3s" id="38L-bH-dph"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="29.600000000000001" y="53.201970443349758"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
