@@ -7,14 +7,13 @@
 
 import UIKit
 
-
 @IBDesignable
 class SetCardView: UIView {
-    
+
     @IBInspectable
     var isFaceUp: Bool = true { didSet {
         setNeedsDisplay(); setNeedsLayout() } }
-    
+
     @IBInspectable
     var isSelected: Bool = false { didSet {
         if isFaceUp {
@@ -30,29 +29,28 @@ class SetCardView: UIView {
                 borderColor =  match ? DefaultUIConstants.matchedCardColor : DefaultUIConstants.mismatchedCardColor}
         }
     }}
-    
-   
-    @IBInspectable var borderColor : UIColor = DefaultUIConstants.borderColor {
+
+    @IBInspectable var borderColor: UIColor = DefaultUIConstants.borderColor {
         didSet {
             layer.borderColor = borderColor.cgColor
             setNeedsDisplay(); setNeedsLayout()
         }
     }
 
-    @IBInspectable var borderWidth : CGFloat = DefaultUIConstants.borderWidth {
+    @IBInspectable var borderWidth: CGFloat = DefaultUIConstants.borderWidth {
         didSet {
             layer.borderWidth = borderWidth
             setNeedsDisplay(); setNeedsLayout()
         }
     }
 
-    @IBInspectable var cornerRadius : CGFloat = DefaultUIConstants.cornerRadius {
+    @IBInspectable var cornerRadius: CGFloat = DefaultUIConstants.cornerRadius {
         didSet {
             layer.cornerRadius = cornerRadius
             setNeedsDisplay(); setNeedsLayout()
         }
     }
-    
+
     @IBInspectable
     var symbolKindInt: Int = 1 {
         didSet {
@@ -64,7 +62,7 @@ class SetCardView: UIView {
             }
         }
     }
-    
+
     @IBInspectable
     var fillKindInt: Int = 1 {
         didSet {
@@ -76,7 +74,7 @@ class SetCardView: UIView {
             }
         }
     }
-    
+
     @IBInspectable
     var colorKindInt: Int = 1 {
         didSet {
@@ -88,16 +86,14 @@ class SetCardView: UIView {
             }
         }
     }
-    
+
     @IBInspectable
     var symbolsCount: Int = 1 {didSet {setNeedsDisplay(); setNeedsLayout()}}
-    
     private var color: UIColor = SetColor.green {didSet {setNeedsDisplay(); setNeedsLayout()}}
-    private var fill = Fill.unfilled{didSet {setNeedsDisplay(); setNeedsLayout()}}
-    private var symbol = Symbol.squiggle{didSet {setNeedsDisplay(); setNeedsLayout()}}
-    
-    
-    required init(with card: SetCard){
+    private var fill = Fill.unfilled {didSet {setNeedsDisplay(); setNeedsLayout()}}
+    private var symbol = Symbol.squiggle {didSet {setNeedsDisplay(); setNeedsLayout()}}
+
+    required init(with card: SetCard) {
         self.card = card
         super.init(frame: CGRect.zero)
         updateViewFromCard(card)
@@ -106,13 +102,13 @@ class SetCardView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    var card : SetCard {
+
+    var card: SetCard {
         didSet {
             updateViewFromCard(card)
         }
     }
-    
+
     private func updateViewFromCard(_ card: SetCard) {
         symbolsCount = card.firstSign.rawValue
         colorKindInt = card.secondSign.rawValue
@@ -121,7 +117,7 @@ class SetCardView: UIView {
         setNeedsDisplay()
         setNeedsLayout()
     }
-    
+
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
@@ -129,13 +125,12 @@ class SetCardView: UIView {
                                 cornerRadius: cornerRadius)
         if isFaceUp {
             drawCard(rect)
-        }
-        else {
+        } else {
             SetCardViewConstants.shirtColor.setFill()
             rect.fill()
         }
     }
-    
+
     private func drawCard(_ path: UIBezierPath) {
         DefaultUIConstants.backgroundColor.setFill()
         path.fill()
@@ -154,13 +149,12 @@ class SetCardView: UIView {
         default: break
         }
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         if isFaceUp {
             configureBorder()
-        }
-        else {
+        } else {
             layer.borderWidth = 0.0
         }
     }
@@ -171,7 +165,7 @@ class SetCardView: UIView {
         layer.borderWidth = borderWidth
         layer.borderColor = borderColor.cgColor
     }
-    
+
     private func drawSymbol(_ rect: CGRect) {
         let rect = rect.insetBy(dx: DefaultUIConstants.internalOffset, dy: DefaultUIConstants.internalOffset)
         let path: UIBezierPath
@@ -183,7 +177,6 @@ class SetCardView: UIView {
         case .diamond:
             path = getDiamond(in: rect)
         }
-       
         // we always set border
         color.setStroke()
         path.lineWidth = DefaultUIConstants.internalBorderWidth
@@ -198,12 +191,12 @@ class SetCardView: UIView {
             stripePath(path: path)
         }
     }
-    
-    private func stripePath(path: UIBezierPath){
+
+    private func stripePath(path: UIBezierPath) {
         let context = UIGraphicsGetCurrentContext()
         context?.saveGState()
         path.addClip()
-        let numberOfLines : Int = Int(self.bounds.width / DefaultUIConstants.betweenStripesDistance)
+        let numberOfLines: Int = Int(self.bounds.width / DefaultUIConstants.betweenStripesDistance)
         let line = UIBezierPath()
         line.lineWidth = DefaultUIConstants.internalBorderWidth
         line.move(to: CGPoint(x: self.bounds.minX, y: self.bounds.minY))
@@ -215,8 +208,8 @@ class SetCardView: UIView {
         }
         context?.restoreGState()
     }
-    
-    //MARK: shape drawing functions
+
+    // MARK: shape drawing functions
     private func getOval(in rect: CGRect) -> UIBezierPath {
         let oval = UIBezierPath()
         let radius = rect.height / 2
@@ -237,7 +230,7 @@ class SetCardView: UIView {
         oval.close()
         return oval
     }
-    
+
     private func getDiamond(in rect: CGRect) -> UIBezierPath {
         let diamond = UIBezierPath()
         diamond.move(to: CGPoint(x: rect.midX, y: rect.minY))
@@ -247,14 +240,13 @@ class SetCardView: UIView {
         diamond.close()
         return diamond
     }
-    
+
     private func getSquiggle(in rect: CGRect) -> UIBezierPath {
         let partSquiggle = UIBezierPath()
         partSquiggle.move(to: CGPoint(x: rect.minX, y: rect.midY))
         partSquiggle.addCurve(to: CGPoint(x: rect.minX + rect.size.width*0.2, y: rect.minY + rect.height*0.15),
                               controlPoint1: CGPoint(x: rect.minX, y: rect.minY),
                               controlPoint2: CGPoint(x: rect.minX + rect.size.width*0.15, y: rect.minY + rect.height*0.1))
-        
         partSquiggle.addCurve(to: CGPoint(x: rect.midX + rect.size.width*0.15, y: rect.midY - rect.height*0.15),
                                   controlPoint1: CGPoint(x: rect.minX + rect.size.width*0.25, y: rect.minY + rect.height*0.2),
         controlPoint2: CGPoint(x: rect.midX, y: rect.midY))
@@ -271,7 +263,7 @@ class SetCardView: UIView {
         return partSquiggle
     }
 
-    //MARK: animation
+    // MARK: animation
     func dealAndFlip(from point: CGPoint, width: CGFloat, height: CGFloat, with delay: TimeInterval) {
         let currentCenter = center
         let currentBounds = bounds
@@ -289,7 +281,7 @@ class SetCardView: UIView {
                     self.bounds = currentBounds
                 },
             completion:
-                { position in
+                { _ in
                     UIView.transition(
                         with: self,
                         duration: DefaultUIConstants.flipAfterDealDuration,
@@ -302,9 +294,9 @@ class SetCardView: UIView {
                 }
         )
     }
-    
-    var notifyCardIsDropped : (() -> Void)?
-    
+
+    var notifyCardIsDropped: (() -> Void)?
+
     func dropAndFaceDown(to point: CGPoint, width: CGFloat, height: CGFloat, with delay: TimeInterval) {
         UIViewPropertyAnimator.runningPropertyAnimator(
             withDuration: DefaultUIConstants.dropDuration,
@@ -316,7 +308,7 @@ class SetCardView: UIView {
                     self.bounds = CGRect(x: 0.0, y: 0.0, width: width, height: height)
                 },
             completion:
-                { position in
+                { _ in
                     UIView.transition(
                         with: self,
                         duration: DefaultUIConstants.flipAfterDropDuration,
@@ -325,18 +317,15 @@ class SetCardView: UIView {
                             {
                                 self.isFaceUp = false
                             },
-                        completion: {
-                            finished in
+                        completion: { _ in
                             self.notifyCardIsDropped?()
                         }
                     )
                 }
         )
     }
-    
 }
-    
-    
+
 private enum Fill: Int {
     case solid = 1
     case striped
@@ -356,17 +345,17 @@ private struct SetColor {
 }
 
 private struct DefaultUIConstants {
-    static let borderWidth : CGFloat = 2.5
+    static let borderWidth: CGFloat = 2.5
     static let borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
     static let backgroundColor  = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     static let cornerOffset = 1.5
     static let internalOffset = 1.0
     static let internalBorderWidth = 0.5
     static let betweenStripesDistance = 4.0
-    static let cornerRadius : CGFloat = 8.0
-    static let chosenCardColor : UIColor = #colorLiteral(red: 0.05665164441, green: 0.2764216363, blue: 1, alpha: 1)
-    static let matchedCardColor : UIColor = #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
-    static let mismatchedCardColor : UIColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+    static let cornerRadius: CGFloat = 8.0
+    static let chosenCardColor: UIColor = #colorLiteral(red: 0.05665164441, green: 0.2764216363, blue: 1, alpha: 1)
+    static let matchedCardColor: UIColor = #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
+    static let mismatchedCardColor: UIColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
     static let dealDuration = 1.0
     static let dropDuration = 1.0
     static let flipAfterDealDuration = 0.25
@@ -375,18 +364,18 @@ private struct DefaultUIConstants {
 
 extension CGRect {
     var firstThird: CGRect {
-        return CGRect(x: minX, y: minY, width: width, height: height/3)
+        CGRect(x: minX, y: minY, width: width, height: height/3)
     }
     var centerThird: CGRect {
-        return CGRect(x: minX, y: minY + height/3, width: width, height: height/3)
+        CGRect(x: minX, y: minY + height/3, width: width, height: height/3)
     }
     var lastThird: CGRect {
-        return CGRect(x: minX, y: minY + 2*height/3, width: width, height: height/3)
+        CGRect(x: minX, y: minY + 2*height/3, width: width, height: height/3)
     }
     var firstThirdWithSixOffset: CGRect {
-        return CGRect(x: minX, y: minY + height/6, width: width, height: height/3)
+        CGRect(x: minX, y: minY + height/6, width: width, height: height/3)
     }
     var lastThirdWithSixOffset: CGRect {
-        return CGRect(x: minX, y: midY, width: width, height: height/3)
+        CGRect(x: minX, y: midY, width: width, height: height/3)
     }
 }

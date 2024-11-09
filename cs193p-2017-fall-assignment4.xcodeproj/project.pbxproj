@@ -24,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E782D962CDFC18400B43108 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		EF4840FC283F86BC004917B0 /* cs193p-2017-fall-assignment4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cs193p-2017-fall-assignment4.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4840FF283F86BC004917B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF484101283F86BC004917B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +57,7 @@
 		EF4840F3283F86BC004917B0 = {
 			isa = PBXGroup;
 			children = (
+				4E782D962CDFC18400B43108 /* .swiftlint.yml */,
 				EF4840FE283F86BC004917B0 /* cs193p-2017-fall-assignment4 */,
 				EF4840FD283F86BC004917B0 /* Products */,
 			);
@@ -141,6 +143,7 @@
 				EF4840F8283F86BC004917B0 /* Sources */,
 				EF4840F9283F86BC004917B0 /* Frameworks */,
 				EF4840FA283F86BC004917B0 /* Resources */,
+				4E782D972CDFC1C900B43108 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -196,6 +199,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4E782D972CDFC1C900B43108 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EF4840F8283F86BC004917B0 /* Sources */ = {

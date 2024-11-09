@@ -7,14 +7,13 @@
 
 import UIKit
 
-class CardBehavior: UIDynamicBehavior
-{
+class CardBehavior: UIDynamicBehavior {
     lazy var collisionBehavior: UICollisionBehavior = {
         let behavior = UICollisionBehavior()
         behavior.translatesReferenceBoundsIntoBoundary = true
         return behavior
     }()
-    
+
     lazy var itemBehavior: UIDynamicItemBehavior = {
         let behavior = UIDynamicItemBehavior()
         behavior.allowsRotation = true
@@ -22,7 +21,7 @@ class CardBehavior: UIDynamicBehavior
         behavior.resistance = 0
         return behavior
     }()
-    
+
     private func push(_ item: UIDynamicItem) {
         let push = UIPushBehavior(items: [item], mode: .instantaneous)
         if let referenceBounds = dynamicAnimator?.referenceView?.bounds {
@@ -48,24 +47,24 @@ class CardBehavior: UIDynamicBehavior
             addChildBehavior(push)
         }
     }
-    
+
     func addItem(_ item: UIDynamicItem) {
         collisionBehavior.addItem(item)
         itemBehavior.addItem(item)
         push(item)
     }
-    
+
     func removeItem(_ item: UIDynamicItem) {
         collisionBehavior.removeItem(item)
         itemBehavior.removeItem(item)
     }
-    
+
     override init() {
         super.init()
         addChildBehavior(collisionBehavior)
         addChildBehavior(itemBehavior)
     }
-    
+
     convenience init(in animator: UIDynamicAnimator) {
         self.init()
         animator.addBehavior(self)
@@ -74,7 +73,6 @@ class CardBehavior: UIDynamicBehavior
 
 extension CGFloat {
     var arc4random: CGFloat {
-        return self * (CGFloat(UInt32.random(in: .min ... .max))/CGFloat(UInt32.max))
+        self * (CGFloat(UInt32.random(in: .min ... .max))/CGFloat(UInt32.max))
     }
 }
-
