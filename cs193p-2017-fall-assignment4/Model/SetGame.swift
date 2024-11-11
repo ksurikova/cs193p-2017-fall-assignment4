@@ -22,6 +22,7 @@ struct SetGame {
     private(set) var cardsJustDeal = [SetCard]()
     private(set) var cardsChangedSelection = [SetCard]()
     private(set) var score = 0
+    private(set) var isTestMode = false
 
     private func getDeck() -> [SetCard] {
         var deck = [SetCard]()
@@ -47,6 +48,18 @@ struct SetGame {
 
     func canDealMoreCards(countToDeal: Int = Self.cardsToDealAndCheckCount) -> Bool {
         deck.count >= countToDeal
+    }
+
+    mutating func toggleTestMode() {
+        isTestMode = !isTestMode
+        clearCardsState()
+        if cardsChosen.count == Self.cardsToDealAndCheckCount {
+            // change points because we turn on test mode, so right now we add set matching points and remove penalty points
+            if isTestMode {
+                score = score + Self.setQuessPoint + Self.setNoQuessPenaltyPoint
+                matchAndDealCardsWhenSetHappens()
+            }
+        }
     }
 
     mutating func dealCards() {
@@ -79,16 +92,10 @@ struct SetGame {
                 score -= Self.removeChoisePenaltyPoint
                 cardsChangedSelection.append(card)
             } else {
-                let setHappens = try SetCard.isSet(cardsToCheck: cardsChosen)
+                let setHappens = isTestMode ? true : try SetCard.isSet(cardsToCheck: cardsChosen)
                 score = setHappens ? score+Self.setQuessPoint: score-Self.setNoQuessPenaltyPoint
                 if setHappens {
-                    for element in cardsChosen {
-                        cardsRemoved.append(element)
-                        _ = cardsOnView.removeIfContains(element)
-                    }
-                    cardsChosen.removeAll()
-                    cardsChangedSelection.append(contentsOf: cardsChosen)
-                    dealCards()
+                    matchAndDealCardsWhenSetHappens()
                 } else {
                     cardsChangedSelection.append(card)
                 }
@@ -105,21 +112,14 @@ struct SetGame {
         }
     }
 
-    func getCountSetsOnView()  throws -> Int {
-        var count = 0
-        guard cardsOnView.count > 3 else { return count }
-        for index1 in 0...cardsOnView.count - 3 {
-            for index2 in (index1+1)...cardsOnView.count - 2 {
-
-                for index3 in (index2 + 1)...(cardsOnView.count - 1) {
-                    guard try SetCard.isSet(cardsToCheck: [cardsOnView[index1], cardsOnView[index2], cardsOnView[index3]]) else {
-                        continue
-                    }
-                    count += 1
-                }
-            }
+    private mutating func matchAndDealCardsWhenSetHappens() {
+        for element in cardsChosen {
+            cardsRemoved.append(element)
+            _ = cardsOnView.removeIfContains(element)
         }
-        return count
+        cardsChosen.removeAll()
+        cardsChangedSelection.append(contentsOf: cardsChosen)
+        dealCards()
     }
 }
 

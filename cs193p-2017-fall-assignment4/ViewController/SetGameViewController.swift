@@ -18,6 +18,12 @@ class SetGameViewController: UIViewController {
 
     @IBOutlet weak var scoreLabel: UILabel!
 
+    @IBOutlet weak var enableTestModeCheckbox: UIButton! {
+        didSet {
+            updateCheckbox(isChecked: false)
+        }
+    }
+
     @IBOutlet weak var deckView: DeckView! {
         didSet {
                         let tap = UITapGestureRecognizer(
@@ -29,14 +35,17 @@ class SetGameViewController: UIViewController {
                     }
     }
 
+    @IBAction func touchTestMode(_ sender: UIButton) {
+        game.toggleTestMode()
+        sender.isSelected.toggle()
+        updateCheckbox(isChecked: sender.isSelected)
+        updateScore()
+        updateCardViewsFromModel()
+    }
+
     @IBOutlet weak var dropView: DeckView! {
         didSet {
             dropView.alpha = 0
-        }
-    }
-    @IBOutlet weak var setCountLabel: UILabel! {
-        didSet {
-            try? updateSetCountLabel()
         }
     }
 
@@ -65,7 +74,6 @@ class SetGameViewController: UIViewController {
         game.dealCards()
         addToDeal()
         dealCards()
-        try? updateSetCountLabel()
         updateDealCardsButtonState()
     }
 
@@ -89,8 +97,8 @@ class SetGameViewController: UIViewController {
         // animate first cards dealing
         dealCards()
         updateScore()
-        try? updateSetCountLabel()
         updateDealCardsButtonState()
+        updateCheckbox(isChecked: false)
     }
 
     private func clearDrop() {
@@ -137,7 +145,6 @@ class SetGameViewController: UIViewController {
                 try game.chooseCard(card: cardView.card)
                 updateCardViewsFromModel()
                 updateScore()
-                try updateSetCountLabel()
                 updateDealCardsButtonState()
             }
         }
@@ -147,13 +154,13 @@ class SetGameViewController: UIViewController {
         deckView.isHidden = !game.canDealMoreCards()
     }
 
-    private func updateSetCountLabel() throws {
-        let setsCount = try game.getCountSetsOnView()
-        setCountLabel.text = "Sets on view: \(setsCount)"
-    }
-
     private func updateScore() {
         scoreLabel.text = "Score: \(game.score)"
+    }
+
+    private func updateCheckbox(isChecked: Bool) {
+        let symbolName = isChecked ? "checkmark.square" : "square"
+        enableTestModeCheckbox.setImage(UIImage(systemName: symbolName), for: .normal)
     }
 
     private func updateCardViewsFromModel() {
@@ -199,11 +206,14 @@ class SetGameViewController: UIViewController {
                 }
             }
         }
+        // animate dealing cards
         dealCards()
+        // dropping matched cards - only after moving match cards was finished
         if tmpCards.count == SetGame.cardsToDealAndCheckCount {
             dropCards()
         }
     }
+
 
     private func moveCardToCollide(_ card: SetCardView) {
         let newCard = SetCardView(with: card.card)

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -19,15 +19,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8py-y8-7iJ" customClass="SetCardAreaView" customModule="cs193p_2017_fall_assignment4" customModuleProvider="target">
-                                <rect key="frame" x="5" y="49" width="365" height="652.33333333333337"/>
+                                <rect key="frame" x="5" y="55" width="365" height="616.66666666666663"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DEe-8b-2kr" customClass="DeckView" customModule="cs193p_2017_fall_assignment4" customModuleProvider="target">
-                                <rect key="frame" x="126.66666666666666" y="696.33333333333337" width="121.66666666666666" height="86.666666666666629"/>
+                                <rect key="frame" x="126.66666666666666" y="666.66666666666663" width="121.66666666666666" height="116.33333333333337"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="VgO-Tj-hoI" userLabel="VerticalStackView">
-                                <rect key="frame" x="5.0000000000000071" y="696.33333333333337" width="121.66666666666669" height="86.666666666666629"/>
+                                <rect key="frame" x="5.0000000000000071" y="666.66666666666663" width="121.66666666666669" height="116.33333333333337"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="caS-P1-9ow">
                                         <rect key="frame" x="0.0" y="0.0" width="121.66666666666667" height="30"/>
@@ -37,14 +37,18 @@
                                             <action selector="playAgain:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FC2-dl-8R5"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sets on view: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3d-AB-y3s">
-                                        <rect key="frame" x="0.0" y="38" width="121.66666666666667" height="20.333333333333329"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UW4-2W-KIz">
+                                        <rect key="frame" x="0.0" y="38" width="121.66666666666667" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Enable Test Mode">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="touchTestMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="asa-Ch-WDM"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWO-kA-jnV">
-                                        <rect key="frame" x="0.0" y="66.333333333333258" width="121.66666666666667" height="20.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="96" width="121.66666666666667" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -55,7 +59,7 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8AP-CF-Fd6" userLabel="DropView" customClass="DeckView" customModule="cs193p_2017_fall_assignment4" customModuleProvider="target">
-                                <rect key="frame" x="248.33333333333334" y="696.33333333333337" width="121.66666666666666" height="86.666666666666629"/>
+                                <rect key="frame" x="248.33333333333334" y="666.66666666666663" width="121.66666666666666" height="116.33333333333337"/>
                                 <color key="backgroundColor" systemColor="systemCyanColor"/>
                             </view>
                         </subviews>
@@ -83,9 +87,9 @@
                         <outlet property="containerView" destination="8bC-Xf-vdC" id="QRA-ZE-fqw"/>
                         <outlet property="deckView" destination="DEe-8b-2kr" id="zyP-Qg-SuG"/>
                         <outlet property="dropView" destination="8AP-CF-Fd6" id="rEl-xS-aOn"/>
+                        <outlet property="enableTestModeCheckbox" destination="UW4-2W-KIz" id="zzD-ZS-2IB"/>
                         <outlet property="scoreLabel" destination="ZWO-kA-jnV" id="h70-fh-Nhg"/>
                         <outlet property="setCardsView" destination="8py-y8-7iJ" id="l1W-Oi-ZDk"/>
-                        <outlet property="setCountLabel" destination="q3d-AB-y3s" id="38L-bH-dph"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -98,10 +102,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
