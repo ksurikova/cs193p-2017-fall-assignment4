@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8py-y8-7iJ" customClass="SetCardAreaView" customModule="cs193p_2017_fall_assignment4" customModuleProvider="target">
-                                <rect key="frame" x="5" y="55" width="365" height="616.66666666666663"/>
+                                <rect key="frame" x="5" y="55" width="365" height="606.66666666666663"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DEe-8b-2kr" customClass="DeckView" customModule="cs193p_2017_fall_assignment4" customModuleProvider="target">
@@ -71,7 +71,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="8AP-CF-Fd6" secondAttribute="bottom" constant="-5" id="DUV-7l-Eio"/>
                             <constraint firstItem="VgO-Tj-hoI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="5" id="J8s-kD-iKl"/>
                             <constraint firstItem="VgO-Tj-hoI" firstAttribute="width" secondItem="8AP-CF-Fd6" secondAttribute="width" id="KIK-vB-Xf0"/>
-                            <constraint firstItem="8py-y8-7iJ" firstAttribute="bottom" secondItem="VgO-Tj-hoI" secondAttribute="top" constant="5" id="US4-dP-MuO"/>
+                            <constraint firstItem="VgO-Tj-hoI" firstAttribute="top" secondItem="8py-y8-7iJ" secondAttribute="bottom" constant="5" id="US4-dP-MuO"/>
                             <constraint firstItem="8py-y8-7iJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="VHa-k2-ORB"/>
                             <constraint firstItem="DEe-8b-2kr" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="gPJ-te-0GT"/>
                             <constraint firstItem="VgO-Tj-hoI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="hHl-QO-UVH"/>

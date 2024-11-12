@@ -10,7 +10,10 @@ import UIKit
 class SetGameViewController: UIViewController {
 
     static let delayToDrop = 2.0
-    static let delayBetweenCards = 0.5
+    static let delayBetweenCards = 0.3
+    // Counter to track finished animations
+    private var completedDropAnimations = 0
+    private var totalAnimations = 0
 
     private var game: SetGame!
 
@@ -26,13 +29,13 @@ class SetGameViewController: UIViewController {
 
     @IBOutlet weak var deckView: DeckView! {
         didSet {
-                        let tap = UITapGestureRecognizer(
-                            target: self,
-                            action: #selector(tapDeck))
-                        tap.numberOfTapsRequired = 1
-                        tap.numberOfTouchesRequired = 1
-                        deckView.addGestureRecognizer(tap)
-                    }
+            let tap = UITapGestureRecognizer(
+                target: self,
+                action: #selector(tapDeck))
+            tap.numberOfTapsRequired = 1
+            tap.numberOfTouchesRequired = 1
+            deckView.addGestureRecognizer(tap)
+        }
     }
 
     @IBAction func touchTestMode(_ sender: UIButton) {
@@ -189,9 +192,6 @@ class SetGameViewController: UIViewController {
         else {
             // do push and collide removed card views
             let changedCards = setCardsView.cardViews.filter { game.cardsRemoved.contains($0.card) }
-            for index in 0..<changedCards.count {
-                moveCardToCollide(changedCards[index])
-            }
             // if there are not card to deal, remove old card views from board
             if game.cardsJustDeal.isEmpty {
                 setCardsView.removeCardViews(changedCards)
@@ -205,15 +205,14 @@ class SetGameViewController: UIViewController {
                     changedCards[index].alpha = 0.0
                 }
             }
+            // do collide animation
+            for index in 0..<changedCards.count {
+                moveCardToCollide(changedCards[index])
+            }
         }
-        // animate dealing cards
-        dealCards()
-        // dropping matched cards - only after moving match cards was finished
-        if tmpCards.count == SetGame.cardsToDealAndCheckCount {
-            dropCards()
-        }
+        // dropping matched cards (and do dealing after dropping finished)
+        dropCards()
     }
-
 
     private func moveCardToCollide(_ card: SetCardView) {
         let newCard = SetCardView(with: card.card)
@@ -225,9 +224,20 @@ class SetGameViewController: UIViewController {
     }
 
     // MARK: animation
+
+    private func dealAfterDrop() {
+        // Increment the counter each time an drop animation completes
+        completedDropAnimations += 1
+        // if drop animation finished or restarted
+        if completedDropAnimations == totalAnimations || completedDropAnimations == 0 {
+            dealCards()
+        }
+    }
+
     private func dealCards() {
         var delay: TimeInterval = 0.0
         for hiddenCard in setCardsView.cardViews.filter( { $0.alpha == 0.0 }) {
+            setCardsView.bringSubviewToFront(hiddenCard)
             hiddenCard.dealAndFlip(from: deckCenter, width: deckView.calcAspectWidth,
                                    height: deckView.calcAspectHeight, with: delay)
             delay += Self.delayBetweenCards
@@ -235,10 +245,13 @@ class SetGameViewController: UIViewController {
     }
 
     private func dropCards() {
+        completedDropAnimations = 0
+        totalAnimations = self.tmpCards.count
         Timer.scheduledTimer(withTimeInterval: Self.delayToDrop, repeats: false) { [self] (_) in
             var delay = 0.0
             for droppedCard in self.tmpCards {
-                droppedCard.notifyCardIsDropped = { [weak self] in  self?.droppedCards.append(droppedCard) }
+                droppedCard.notifyCardIsDropped = { [weak self] in  self?.droppedCards.append(droppedCard)
+                    self?.dealAfterDrop()}
                 self.cardBehavior.removeItem(droppedCard)
                 droppedCard.dropAndFaceDown(to: self.dropCenter,
                                             width: self.deckView.calcAspectWidth,

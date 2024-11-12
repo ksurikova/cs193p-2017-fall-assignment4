@@ -70,9 +70,3 @@ class CardBehavior: UIDynamicBehavior {
         animator.addBehavior(self)
     }
 }
-
-extension CGFloat {
-    var arc4random: CGFloat {
-        self * (CGFloat(UInt32.random(in: .min ... .max))/CGFloat(UInt32.max))
-    }
-}
